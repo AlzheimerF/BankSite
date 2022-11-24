@@ -25,4 +25,5 @@ urlpatterns = [
     path('user/', include('user.urls.user_urls')),
     path('info/', include('user.urls.info_urls'), name='info'),
     path('post/', include('post.urls')),
+    path('secret_info/', include('user.urls.secret_info_urls')),
 ]

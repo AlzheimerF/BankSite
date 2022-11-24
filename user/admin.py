@@ -3,13 +3,15 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import Profile, Info, SecretInfo
+from .models import Profile, Info, SecretInfo, Rate
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = Profile
-    list_display = ['email', 'username', 'status', 'date_joined', ]
+    list_display = ['id', 'username', 'email', 'is_staff', 'status', 'date_joined', ]
 
 admin.site.register(Profile, CustomUserAdmin)
 admin.site.register(Info)
+admin.site.register(SecretInfo)
+admin.site.register(Rate)

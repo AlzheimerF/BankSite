@@ -3,3 +3,6 @@ user/migrations
 post/migrations
 .env
 venv
+.idea
+user/__pycache__/
+post/__pycache__/

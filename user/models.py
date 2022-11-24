@@ -6,8 +6,8 @@ class Profile(AbstractUser):
         ('Giving', 'Giving'),
         ('Taking', 'Taking'),
     ]
-    status = models.CharField(null=True, choices=CREDIT_CHOICES, max_length=50)
-    date_joined = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(default=None, choices=CREDIT_CHOICES, max_length=50, null=True)
+    # date_joined = models.DateTimeField(auto_now_add=True)
     about_yourself = models.TextField(null=True)
 
     def __str__(self):
@@ -24,6 +24,7 @@ class Info(models.Model):
         ('Male', 'Male'),
     ]
     user = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    avatar = models.ImageField()
     country = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES)
@@ -40,8 +41,11 @@ class SecretInfo(models.Model):
     address = models.CharField(max_length=255, unique=True)
     number = models.IntegerField(null=True, unique=True)
 
+    def __str__(self):
+        return self.address
 class Rate(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    user = models.ForeignKey(Profile, on_delete=models.PROTECT, related_name='user')
+    user_who_rate = models.ForeignKey(Profile, on_delete=models.PROTECT, related_name='user_who_rate')
     stars = models.IntegerField(unique=True)
     image = models.ImageField()
     text = models.TextField()

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile, Info, SecretInfo
+from .models import Profile, Info, SecretInfo, Rate
 
 class ProfileSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(max_length=100, write_only=True)
@@ -14,7 +14,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        profile = Profile.objects.create(
+        profile = Profile.objects.create_user(
             username=validated_data.get('username'),
             password=validated_data.get('password'),
             status=validated_data.get('status'),
@@ -40,3 +40,28 @@ class InfoSerializer(serializers.ModelSerializer):
             gender=validated_data.get('gender')
         )
         return info
+
+class SecretInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SecretInfo
+        fields = '__all__'
+
+    def create(self, validated_data):
+        secret_info = SecretInfo.objects.create(
+            user=validated_data.get('user'),
+            passport_front=validated_data.get('passport_front'),
+            passport_back=validated_data.get('passport_back'),
+            address=validated_data.get('address'),
+            number=validated_data.get('number')
+        )
+        return secret_info
+
+# class RateSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = Rate
+#         fields = '__all__'
+#
+#     def create(self, validated_data):
+
